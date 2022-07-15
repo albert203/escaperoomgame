@@ -2,9 +2,9 @@ using RiptideNetworking;
 using RiptideNetworking.Utils;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class NetworkManager : MonoBehaviour
 {
-// Attach the NetworkManager to a gameobject 
+    // Attach the NetworkManager to a gameobject 
     // and access that specific instance anywhere in our code 
     // This will also ensure that there will ever be one instance of
     // the NetworkManager in the scene.
@@ -40,8 +40,8 @@ public class NewBehaviourScript : MonoBehaviour
     // to a field, it tells the unity engine to save/restore it's state to/from disk. 
     // You mostly use serialization for the editor, and especially when building your 
     // own editor windows and inspectors.
-    [SerializeField] private static ip;
-    [SerializeField] private static port;
+    [SerializeField] private string ip;
+    [SerializeField] private ushort port;
 
     private void Awake()
     {
@@ -55,7 +55,7 @@ public class NewBehaviourScript : MonoBehaviour
 
         // Starting the server. With our port and max client count parameters.
         EscaperoomClient = new Client();
-        EscaperoomClient.
+        EscaperoomClient.Connect($"{ip}:{port}");
     }
 
         private void FixedUpdate()
@@ -66,8 +66,8 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        // When the application quits, we are going to call the Stop method
-        // on our server property.
-        EscaperoomClient.Stop();
+        // .Disconnect() is a method that closes the connection to the server.
+        EscaperoomClient.Disconnect();
     }
 }
+
