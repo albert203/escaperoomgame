@@ -1,26 +1,28 @@
+using System;
 using RiptideNetworking;
 using RiptideNetworking.Utils;
 using UnityEngine;
 
+// This enum will contain all the ids for messages 
+// we send from the client to the server
+public enum EscapeRoomToClientId : ushort
+{
+    name = 1,
+}
+
 public class NetworkManager : MonoBehaviour
 {
-    // Attach the NetworkManager to a gameobject 
-    // and access that specific instance anywhere in our code 
-    // This will also ensure that there will ever be one instance of
-    // the NetworkManager in the scene.
-    private static NetworkManager _singleton; 
-
-    public static NetworkManager Singleton{
+    private static NetworkManager _singleton;
+    public static NetworkManager Singleton
+    {
         get => _singleton;
         private set
         {
             if (_singleton == null)
-            {
                 _singleton = value;
-            }
-            else if(_singleton != value)
+            else if (_singleton != value)
             {
-                Debug.Log($"{nameof(NetworkManager)} instance already exists, destroying duplicates");
+                Debug.Log($"{nameof(NetworkManager)} instance already exists, destroying duplicate!");
                 Destroy(value);
             }
         }
@@ -53,12 +55,15 @@ public class NetworkManager : MonoBehaviour
         // Initialise the Riptide logger class.
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
-        // Starting the server. With our port and max client count parameters.
+        // Starting the server. With our port and max client count parameters & including
+        // The methods we made to handle errors and feedback
         EscaperoomClient = new Client();
-        EscaperoomClient.Connect($"{ip}:{port}");
+        EscaperoomClient.Connected += DidConnect;
+        EscaperoomClient.ConnectionFailed += FailedToConnect;
+        EscaperoomClient.Disconnected += DidDisconnect;
     }
 
-        private void FixedUpdate()
+    private void FixedUpdate()
     {
         // Ensures messages recieved from the server are processed.
         EscaperoomClient.Tick();
@@ -69,5 +74,39 @@ public class NetworkManager : MonoBehaviour
         // .Disconnect() is a method that closes the connection to the server.
         EscaperoomClient.Disconnect();
     }
-}
+
+    public void Connect()
+    {
+        EscaperoomClient.Connect($"{ip}:{port}");
+    }
+
+    private void DidConnect(object sender, EventArgs e)
+    {
+        // Calling the UImanager SendName method
+        UIManager.Singleton.SendName();
+    }
+
+    private void FailedToConnect(object sender, EventArgs e)
+    {
+        UIManager.Singleton.BackToMain();
+    }
+
+    // The reason we have two of these methods is because we are going 
+    // we are going to add them as suscribers of seperate client events
+    // and be addingmore code that is not identical 
+    
+    // public void DidConnect(object sender, EventArgs e)
+    // {
+    //     // Calling the UImanager SendName method
+    //     UIManager.Singleton.SendName();
+    // }
+   
+    private void DidDisconnect(object sender, EventArgs e)
+    {
+        UIManager.Singleton.BackToMain();
+    }
+} 
+    
+
+
 

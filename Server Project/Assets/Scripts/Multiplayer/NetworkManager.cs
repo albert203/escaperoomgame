@@ -17,7 +17,7 @@ public class NetworkManager : MonoBehaviour
             if (_singleton == null)
             {
                 _singleton = value;
-            }
+            } 
             else if(_singleton != value)
             {
                 Debug.Log($"{nameof(NetworkManager)} instance already exists, destroying duplicates");
@@ -36,7 +36,7 @@ public class NetworkManager : MonoBehaviour
 
     private void Awake()
     {
-
+        Singleton = this;
     }
 
     // In the start method, we are going to intialise the Riplogger class
