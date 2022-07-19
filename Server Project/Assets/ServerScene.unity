@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 348121594}
   - component: {fileID: 348121593}
+  - component: {fileID: 348121595}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -169,3 +170,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &348121595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348121592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e885dad63ad414098af1518faa63d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 6870682675847219965, guid: e0ce85c9644e44d4a882bc80d69acf9a,
+    type: 3}

@@ -2,6 +2,11 @@ using RiptideNetworking;
 using RiptideNetworking.Utils;
 using UnityEngine;
 
+public enum EscapeRoomClientToServerID : ushort
+{
+    name = 1,
+}
+
 public class NetworkManager : MonoBehaviour
 {
     // Attach the NetworkManager to a gameobject 
@@ -51,6 +56,7 @@ public class NetworkManager : MonoBehaviour
         // Starting the server. With our port and max client count parameters.
         Server = new Server();
         Server.Start(port, maxClientCount);
+        Server.ClientDisconnected += PlayerLeft;
     }
 
     private void FixedUpdate()
@@ -64,5 +70,12 @@ public class NetworkManager : MonoBehaviour
         // When the application quits, we are going to call the Stop method
         // on our server property.
         Server.Stop();
+    }
+
+    // Destroy a Player Object when the client discconects.
+    private void PlayerLeft(object sender, ClientDisconnectedEventArgs e)
+    {
+        // When a player disconnects, we are going to remove them from the list.
+        Destroy(Player.list[e.Id].gameObject);
     }
 }
