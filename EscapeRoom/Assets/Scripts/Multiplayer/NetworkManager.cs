@@ -5,7 +5,12 @@ using UnityEngine;
 
 // This enum will contain all the ids for messages 
 // we send from the client to the server
-public enum EscapeRoomToClientId : ushort
+public enum ServerToEscapeRoomClientId : ushort
+{
+    playerSpawned = 1,
+}
+
+public enum EscapeRoomClientToServerId : ushort
 {
     name = 1,
 }
@@ -60,6 +65,7 @@ public class NetworkManager : MonoBehaviour
         EscaperoomClient = new Client();
         EscaperoomClient.Connected += DidConnect;
         EscaperoomClient.ConnectionFailed += FailedToConnect;
+        EscaperoomClient.ClientDisconnected += PlayerLeft;
         EscaperoomClient.Disconnected += DidDisconnect;
     }
 
@@ -89,6 +95,11 @@ public class NetworkManager : MonoBehaviour
     private void FailedToConnect(object sender, EventArgs e)
     {
         UIManager.Singleton.BackToMain();
+    }
+
+      private void PlayerLeft(object sender, ClientDisconnectedEventArgs e)
+    {
+        Destroy(Player.list[e.Id].gameObject);
     }
 
     // The reason we have two of these methods is because we are going 

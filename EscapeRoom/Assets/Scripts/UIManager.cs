@@ -83,7 +83,7 @@ public class UIManager : MonoBehaviour
     // a unsername is more important and should require reliable messages. 
     public void SendName()
     {
-        Message message = Message.Create(MessageSendMode.reliable, (ushort)EscapeRoomToClientId.name);
+        Message message = Message.Create(MessageSendMode.reliable, (ushort)EscapeRoomClientToServerId.name);
         message.AddString(usernameField.text);
         NetworkManager.Singleton.EscaperoomClient.Send(message);
     }

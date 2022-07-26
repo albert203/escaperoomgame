@@ -2,6 +2,12 @@ using RiptideNetworking;
 using RiptideNetworking.Utils;
 using UnityEngine;
 
+// Used to send the player prefab also to the client scene, not just the server scene
+public enum ServerToEscapeRoomClientId : ushort
+{
+    playerSpawned = 1,
+} 
+
 public enum EscapeRoomClientToServerID : ushort
 {
     name = 1,
@@ -50,6 +56,8 @@ public class NetworkManager : MonoBehaviour
     // Start method to start the server.
     private void Start()
     {   
+        Application.targetFrameRate = 60;
+
         // Initialise the Riptide logger class.
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false);
 
