@@ -11,10 +11,10 @@ public class Player : MonoBehaviour
     // And also the if the player is local
     public bool IsLocal { get; private set; }
 
-    // And also the name of the player
     // [SerializeField] private PlayerAnimationManager animationManager;
     [SerializeField] private Transform camTransform;
 
+    // And also the name of the player
     private string username;
 
     private void OnDestroy()
