@@ -10,6 +10,10 @@ public class Player : MonoBehaviour
     public ushort Id { get; private set; }
     public string Username { get; private set; }
 
+    public PlayerMovement Movement => movement;
+
+    [SerializeField] private PlayerMovement movement;
+
     private void OnDestroy()
     {
         // When a player is destroyed, we are going to remove them from the list.
@@ -51,13 +55,13 @@ public class Player : MonoBehaviour
     private void SendSpawned()
     {
         // Send message to all connected players
-        NetworkManager.Singleton.Server.SendToAll(AddSpawnData(Message.Create(MessageSendMode.reliable, (ushort)ServerToEscapeRoomClientId.playerSpawned)));
+        NetworkManager.Singleton.Server.SendToAll(AddSpawnData(Message.Create(MessageSendMode.reliable, ServerToEscapeRoomClientId.playerSpawned)));
     }
 
     // overload for the sendspawned method that takes in a player ID
     private void SendSpawned(ushort ToEscapeRoomClientId)
     {
-        NetworkManager.Singleton.Server.Send(AddSpawnData(Message.Create(MessageSendMode.reliable, (ushort)ServerToEscapeRoomClientId.playerSpawned)), ToEscapeRoomClientId);
+        NetworkManager.Singleton.Server.Send(AddSpawnData(Message.Create(MessageSendMode.reliable, ServerToEscapeRoomClientId.playerSpawned)), ToEscapeRoomClientId);
     }
 
     private Message AddSpawnData(Message message)
@@ -68,14 +72,21 @@ public class Player : MonoBehaviour
         return message;
     }
 
+
     // We are going to need a message with a MessageHadler attribute
     // This attribute lets riptide know that messages with the given 
     // should be handled with the following method
-    [MessageHandler((ushort)EscapeRoomClientToServerID.name)]
-    // MessageHandler methods must be static and can be private
+    // MessageHandler methods MUST be static and can be private
+    [MessageHandler((ushort)EscapeRoomClientToServerId.name)]
     private static void Name(ushort fromEscapeRoomClientId, Message message)
     {
         Spawn(fromEscapeRoomClientId, message.GetString());
     }
 
+    [MessageHandler((ushort)EscapeRoomClientToServerId.input)]
+    private static void Input(ushort fromEscapeRoomClientId, Message message)
+    {
+        if (list.TryGetValue(fromEscapeRoomClientId, out Player player))
+            player.Movement.SetInput(message.GetBools(6), message.GetVector3());
+    }
 }
