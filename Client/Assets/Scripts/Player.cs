@@ -21,13 +21,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Interpolator interpolator;
 
     private string username;
-    private float health;
-
-    private void OnValidate()
-    {
-        if (animationManager == null)
-            animationManager = GetComponent<PlayerAnimationManager>();
-    }
 
     private void OnDestroy()
     {
@@ -39,12 +32,13 @@ public class Player : MonoBehaviour
         interpolator.NewUpdate(tick, isTeleport, newPosition);
         
         if (!IsLocal)
+        {
             camTransform.forward = forward;
-        
-        animationManager.AnimateBasedOnSpeed();
+            animationManager.AnimateBasedOnSpeed();
+        }
     }
 
-    public static void Spawn(ushort id, string username, Team team, Vector3 position)
+    public static void Spawn(ushort id, string username, Vector3 position)
     {
         Player player;
         if (id == NetworkManager.Singleton.Client.Id)
@@ -57,11 +51,9 @@ public class Player : MonoBehaviour
             player = Instantiate(GameLogic.Singleton.PlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.IsLocal = false;
         }
-
         player.name = $"Player {id} ({username})";
         player.Id = id;
         player.username = username;
-
         list.Add(id, player);
     }
 
@@ -69,7 +61,7 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void SpawnPlayer(Message message)
     {
-        Spawn(message.GetUShort(), message.GetString(), (Team)message.GetByte(), message.GetVector3());
+        Spawn(message.GetUShort(), message.GetString(), message.GetVector3());
     }
 
     [MessageHandler((ushort)ServerToClientId.playerMovement)]
