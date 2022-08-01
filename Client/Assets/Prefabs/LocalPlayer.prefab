@@ -28,7 +28,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 0.8, y: 0.9, z: 0.8}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4962057517168989917}
   m_RootOrder: 0
@@ -52,7 +51,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -113,7 +111,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4962057517168989917}
   m_RootOrder: 1
@@ -168,7 +165,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5404251199295210968}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!114 &3721595354957508877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +225,6 @@ GameObject:
   - component: {fileID: 4962057517168989917}
   - component: {fileID: 3888146995961639306}
   - component: {fileID: 6267341411843650629}
-  - component: {fileID: 9021803987866861856}
   m_Layer: 0
   m_Name: LocalPlayer
   m_TagString: Untagged
@@ -246,7 +242,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5558559856283699058}
   - {fileID: 4420057598451644344}
@@ -265,9 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e673d7d9a27ce148af85d77587aec79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationManager: {fileID: 0}
   camTransform: {fileID: 4420057598451644344}
-  interpolator: {fileID: 9021803987866861856}
 --- !u!114 &6267341411843650629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,18 +274,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camTransform: {fileID: 4420057598451644344}
---- !u!114 &9021803987866861856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8559740014325515606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11677924280eb484cab5e074cf1257e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeElapsed: 0
-  timeToReachTarget: 0.05
-  movementThreshold: 0.05
