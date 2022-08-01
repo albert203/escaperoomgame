@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool[] inputs;
     private float yVelocity;
+    private bool didTeleport;
 
     private void OnValidate()
     {
@@ -98,10 +99,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void SendMovement()
     {
+        // % 2 because I set the ticks between position
+        // updates to 2 every second, so the client expects
+        // a position update every 2nd tick.
+        if (NetworkManager.Singleton.CurrentTick % 2 !=0)
+        {
+            return;
+        }
         Message message = Message.Create(MessageSendMode.unreliable, ServerToClientId.playerMovement);
         message.AddUShort(player.Id);
+        message.AddUShort(NetworkManager.Singleton.CurrentTick);
+        message.AddBool(didTeleport);
         message.AddVector3(transform.position);
         message.AddVector3(camProxy.forward);
         NetworkManager.Singleton.Server.SendToAll(message);
+
+        didTeleport = false;
     }
 }

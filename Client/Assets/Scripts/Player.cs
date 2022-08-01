@@ -2,40 +2,49 @@ using RiptideNetworking;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Team : byte
+{
+    none,
+    green,
+    orange
+}
+
 public class Player : MonoBehaviour
 {
     public static Dictionary<ushort, Player> list = new Dictionary<ushort, Player>();
 
-    // Added properties to store the player ids
     public ushort Id { get; private set; }
-
-    // And also the if the player is local
     public bool IsLocal { get; private set; }
 
     [SerializeField] private PlayerAnimationManager animationManager;
-
-    // And also the name of the player
     [SerializeField] private Transform camTransform;
+    [SerializeField] private Interpolator interpolator;
 
     private string username;
+    private float health;
+
+    private void OnValidate()
+    {
+        if (animationManager == null)
+            animationManager = GetComponent<PlayerAnimationManager>();
+    }
 
     private void OnDestroy()
     {
         list.Remove(Id);
     }
 
-    private void Move(Vector3 newPosition, Vector3 forward)
+    private void Move(ushort tick, bool isTeleport, Vector3 newPosition, Vector3 forward)
     {
-        transform.position = newPosition;
+        interpolator.NewUpdate(tick, isTeleport, newPosition);
         
         if (!IsLocal)
-        {
             camTransform.forward = forward;
-            animationManager.AnimateBasedOnSpeed();
-        }
+        
+        animationManager.AnimateBasedOnSpeed();
     }
 
-    public static void Spawn(ushort id, string username, Vector3 position)
+    public static void Spawn(ushort id, string username, Team team, Vector3 position)
     {
         Player player;
         if (id == NetworkManager.Singleton.Client.Id)
@@ -49,7 +58,7 @@ public class Player : MonoBehaviour
             player.IsLocal = false;
         }
 
-        player.name = $"Player {id} (username)";
+        player.name = $"Player {id} ({username})";
         player.Id = id;
         player.username = username;
 
@@ -60,14 +69,14 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void SpawnPlayer(Message message)
     {
-        Spawn(message.GetUShort(), message.GetString(), message.GetVector3());
+        Spawn(message.GetUShort(), message.GetString(), (Team)message.GetByte(), message.GetVector3());
     }
 
     [MessageHandler((ushort)ServerToClientId.playerMovement)]
     private static void PlayerMovement(Message message)
     {
         if (list.TryGetValue(message.GetUShort(), out Player player))
-            player.Move(message.GetVector3(), message.GetVector3());
+            player.Move(message.GetUShort(), message.GetBool(), message.GetVector3(), message.GetVector3());
     }
     #endregion
 }
