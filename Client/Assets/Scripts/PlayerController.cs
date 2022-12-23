@@ -1,4 +1,4 @@
-using RiptideNetworking;
+using Riptide;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     #region Messages
     private void SendInput()
     {
-        Message message = Message.Create(MessageSendMode.unreliable, ClientToServerId.input);
+        Message message = Message.Create(MessageSendMode.Unreliable, ClientToServerId.input);
         message.AddBools(inputs, false);
         message.AddVector3(camTransform.forward);
         NetworkManager.Singleton.Client.Send(message);
