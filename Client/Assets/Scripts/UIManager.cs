@@ -1,4 +1,4 @@
-using RiptideNetworking;
+using Riptide;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
     // a unsername is more important and should require reliable messages.
     public void SendName()
     {
-        Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.name);
+        Message message = Message.Create(MessageSendMode.Reliable, ClientToServerId.name);
         message.AddString(usernameField.text);
         NetworkManager.Singleton.Client.Send(message);
     }

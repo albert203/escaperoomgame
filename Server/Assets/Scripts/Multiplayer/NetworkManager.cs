@@ -1,7 +1,6 @@
-using RiptideNetworking;
-using RiptideNetworking.Utils;
+using Riptide;
+using Riptide.Utils;
 using UnityEngine;
-using System;
 
 public enum ServerToClientId : ushort
 {
@@ -58,7 +57,7 @@ public class NetworkManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Server.Tick();
+        Server.Update();
 
         // tick rate per second is 40, so we can 
         // call the SendSync() method every 5 seconds
@@ -74,16 +73,16 @@ public class NetworkManager : MonoBehaviour
         Server.Stop();
     }
 
-    private void PlayerLeft(object sender, ClientDisconnectedEventArgs e)
+    private void PlayerLeft(object sender, ServerDisconnectedEventArgs e)
     {
-        if (Player.list.TryGetValue(e.Id, out Player player))
+        if (Player.list.TryGetValue(e.Client.Id, out Player player))
             Destroy(player.gameObject);
     }
 
     #region Messages
     private void SendSync()
     {
-        Message message = Message.Create(MessageSendMode.unreliable, (ushort)ServerToClientId.sync);
+        Message message = Message.Create(MessageSendMode.Unreliable, (ushort)ServerToClientId.sync);
         message.Add(CurrentTick);
 
         Server.SendToAll(message);

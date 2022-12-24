@@ -44,13 +44,18 @@ public class Interpolator : MonoBehaviour
 
                 futureTransformUpdates.RemoveAt(i);
                 i--;
+                
                 timeElapsed = 0f;
-                timeToReachTarget = (to.Tick - from.Tick) * Time.fixedDeltaTime;
+                float ticksToReach = (to.Tick - from.Tick);
+                if (ticksToReach == 0f) ticksToReach = 1f;
+                timeToReachTarget = ticksToReach * Time.fixedDeltaTime;
+
             }
         }
-
         timeElapsed += Time.deltaTime;
         InterpolatePosition(timeElapsed / timeToReachTarget);
+
+        
     }
 
     private void InterpolatePosition(float lerpAmount)

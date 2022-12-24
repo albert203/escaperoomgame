@@ -1,4 +1,4 @@
-using RiptideNetworking;
+using Riptide;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -106,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        Message message = Message.Create(MessageSendMode.unreliable, ServerToClientId.playerMovement);
+        Message message = Message.Create(MessageSendMode.Unreliable, ServerToClientId.playerMovement);
         message.AddUShort(player.Id);
         message.AddUShort(NetworkManager.Singleton.CurrentTick);
         message.AddBool(didTeleport);
