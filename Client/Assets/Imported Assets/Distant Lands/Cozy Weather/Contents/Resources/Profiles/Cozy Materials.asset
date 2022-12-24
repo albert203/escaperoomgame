@@ -17,7 +17,7 @@ MonoBehaviour:
   snowColor: {r: 1, g: 1, b: 1, a: 1}
   puddleScale: 2
   modulatedValues:
-  - expanded: 1
+  - expanded: 0
     modulationSource: 1
     modulationTarget: 0
     mappedGradient:

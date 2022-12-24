@@ -35,6 +35,12 @@ namespace DistantLands.Cozy.Data
 
         public override void PlayEffect(float i)
         {
+            
+            if (i <= 0.03f)
+            {
+                StopEffect();
+                return;
+            }
             weight = Mathf.Clamp01(transitionTimeModifier.Evaluate(i));
         }
 

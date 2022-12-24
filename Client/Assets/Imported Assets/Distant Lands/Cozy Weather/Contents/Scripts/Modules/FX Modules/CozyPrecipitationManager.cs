@@ -43,7 +43,6 @@ namespace DistantLands.Cozy
             vfx.weatherSphere.cozyMaterials.rainSpeed = rainSpeed;
             vfx.weatherSphere.cozyMaterials.snowSpeed = snowSpeed;
 
-
         }
 
         public override void OnFXDisable()

@@ -76,30 +76,25 @@ namespace DistantLands.Cozy
             if (profile == null)
                 return;
 
-
-
             m_SnowAmount += Time.deltaTime * snowSpeed;
 
-            if (snowSpeed == 0)
+            if (snowSpeed <= 0)
                 if (weatherSphere.currentTemperature > 32)
+                {
                     m_SnowAmount -= Time.deltaTime * m_SnowMeltSpeed * 0.03f;
+                }
                 else
                     m_SnowAmount -= Time.deltaTime * m_SnowMeltSpeed * 0.001f;
 
-
-
             m_Wetness += (Time.deltaTime * rainSpeed) + (-1 * m_DryingSpeed * 0.001f);
-
 
             m_SnowAmount = Mathf.Clamp01(m_SnowAmount);
             m_Wetness = Mathf.Clamp01(m_Wetness);
-
 
             SetupStaticGlobalVariables();
 
             Shader.SetGlobalFloat("CZY_SnowAmount", m_SnowAmount);
             Shader.SetGlobalFloat("CZY_WetnessAmount", m_Wetness);
-
 
             foreach (MaterialManagerProfile.ModulatedValue i in profile.modulatedValues)
             {
@@ -126,28 +121,6 @@ namespace DistantLands.Cozy
 
                 }
             }
-
-            // foreach (MaterialManagerProfile.TerrainLayerProfile i in profile.terrainLayers)
-            // {
-
-
-            // }
-
-            // foreach (MaterialManagerProfile.SeasonalColorMaterialProfile i in profile.seasonalMaterials)
-            // {
-
-            //     i.material.SetColor(i.propertyToChange, i.color.Evaluate(weatherSphere.GetCurrentYearPercentage()));
-
-
-            // }
-            // foreach (MaterialManagerProfile.SeasonalValueMaterialProfile i in profile.seasonalValueMaterials)
-            // {
-
-            //     i.material.SetFloat(i.propertyToChange, i.value.Evaluate(weatherSphere.GetCurrentYearPercentage()));
-
-
-            // }
-
 
         }
 

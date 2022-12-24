@@ -49,10 +49,16 @@ namespace DistantLands.Cozy.Data
 
         public override void PlayEffect(float i)
         {
-            
+
             if (!VFXMod)
                 if (InitializeEffect(null) == false)
                     return;
+
+            if (i <= 0.03f)
+            {
+                StopEffect();
+                return;
+            }
 
             if (VFXMod.filterManager.isEnabled)
                 weight = Mathf.Clamp01(transitionTimeModifier.Evaluate(i));
@@ -67,7 +73,7 @@ namespace DistantLands.Cozy.Data
             if (!VFXMod)
                 if (InitializeEffect(null) == false)
                     return;
-                    
+
             weight = 0;
             weather.CalculateFilterColors();
         }
@@ -81,7 +87,7 @@ namespace DistantLands.Cozy.Data
 
             if (VFX == null)
                 VFX = CozyWeather.instance.VFX;
-                
+
 
             VFXMod = VFX;
 
@@ -149,7 +155,7 @@ namespace DistantLands.Cozy.Data
             EditorGUI.PropertyField(propPosD, serializedObject.FindProperty("sunFilter"));
             EditorGUI.PropertyField(propPosE, serializedObject.FindProperty("cloudFilter"));
             EditorGUI.PropertyField(propPosF, serializedObject.FindProperty("transitionTimeModifier"));
-            
+
             serializedObject.ApplyModifiedProperties();
         }
 
@@ -157,7 +163,7 @@ namespace DistantLands.Cozy.Data
         {
 
             return 6;
-            
+
         }
 
     }

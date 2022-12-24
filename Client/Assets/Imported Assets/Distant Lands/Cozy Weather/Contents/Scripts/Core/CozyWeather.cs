@@ -426,8 +426,7 @@ namespace DistantLands.Cozy
             sunLight = GetChild("Sun").GetComponent<Light>();
             skyMesh = GetChild("Skydome").GetComponent<MeshRenderer>();
             cloudMesh = GetChild("Foreground Clouds").GetComponent<MeshRenderer>();
-            fogMesh = GetChild("Fog").GetComponent<MeshRenderer>();
-
+            // fogMesh = GetChild("Fog").GetComponent<MeshRenderer>();
         }
 
         Transform GetChild(string name)
@@ -858,11 +857,11 @@ namespace DistantLands.Cozy
 
             if (fogStyle == FogStyle.stylized || fogStyle == FogStyle.heightFog)
             {
-                Shader.SetGlobalColor("CZY_FogColor1", fogColor1);
-                Shader.SetGlobalColor("CZY_FogColor2", fogColor2);
-                Shader.SetGlobalColor("CZY_FogColor3", fogColor3);
-                Shader.SetGlobalColor("CZY_FogColor4", fogColor4);
-                Shader.SetGlobalColor("CZY_FogColor5", fogColor5);
+                Shader.SetGlobalColor("CZY_FogColor1", i.GetColor("_FogColor1"));
+                Shader.SetGlobalColor("CZY_FogColor2", i.GetColor("_FogColor2"));
+                Shader.SetGlobalColor("CZY_FogColor3", i.GetColor("_FogColor3"));
+                Shader.SetGlobalColor("CZY_FogColor4", i.GetColor("_FogColor4"));
+                Shader.SetGlobalColor("CZY_FogColor5", i.GetColor("_FogColor5"));
 
                 Shader.SetGlobalFloat("CZY_FogColorStart1", atmosphereProfile.fogStart1);
                 Shader.SetGlobalFloat("CZY_FogColorStart2", atmosphereProfile.fogStart2);
@@ -871,12 +870,12 @@ namespace DistantLands.Cozy
 
 
                 Shader.SetGlobalFloat("CZY_FogIntensity", i.GetFloat("_FogIntensity"));
-                Shader.SetGlobalFloat("CZY_FogOffset", fogHeight);
+                Shader.SetGlobalFloat("CZY_FogOffset", i.GetFloat("_FogOffset"));
                 Shader.SetGlobalFloat("CZY_FogSmoothness", i.GetFloat("_FogSmoothness"));
-                Shader.SetGlobalFloat("CZY_FogDepthMultiplier", fogDensity * fogDensityMultiplier);
+                Shader.SetGlobalFloat("CZY_FogDepthMultiplier", i.GetFloat("_FogDepthMultiplier"));
             }
 
-            Shader.SetGlobalColor("CZY_LightColor", fogFlareColor);
+            Shader.SetGlobalColor("CZY_LightColor", i.GetColor("_LightColor"));
             Shader.SetGlobalVector("CZY_SunDirection", -sunLight.transform.forward);
             Shader.SetGlobalFloat("CZY_LightFalloff", fogLightFlareFalloff);
             Shader.SetGlobalFloat("CZY_LightIntensity", fogLightFlareIntensity);

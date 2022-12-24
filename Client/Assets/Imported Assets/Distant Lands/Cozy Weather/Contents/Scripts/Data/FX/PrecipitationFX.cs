@@ -45,6 +45,12 @@ namespace DistantLands.Cozy.Data
             if (!VFXMod)
                 if (InitializeEffect(null) == false)
                     return;
+   
+            if (i <= 0.03f)
+            {
+                StopEffect();
+                return;
+            }
 
             if (VFXMod.precipitationManager.isEnabled)
                 weight = 1 * Mathf.Clamp01(transitionTimeModifier.Evaluate(i));

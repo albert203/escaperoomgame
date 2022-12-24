@@ -44,6 +44,13 @@ namespace DistantLands.Cozy.Data
             if (weather == null)
                 weather = CozyWeather.instance;
 
+
+            if (weight <= 0.03f)
+            {
+                StopEffect();
+                return;
+            }
+
             foreach (MultiFXType i in multiFX)
             {
                 i.FX.PlayEffect(i.intensityCurve.Evaluate(weather.GetCurrentDayPercentage()) * weight);
@@ -63,7 +70,7 @@ namespace DistantLands.Cozy.Data
 
 
         }
-        
+
         public override bool InitializeEffect(VFXModule VFX)
         {
 

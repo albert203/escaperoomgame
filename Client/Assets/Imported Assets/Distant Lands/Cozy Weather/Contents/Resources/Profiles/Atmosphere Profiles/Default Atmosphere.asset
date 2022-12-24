@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Default Atmosphere
   m_EditorClassIdentifier: 
   win1: 0
-  win2: 1
+  win2: 0
   win3: 0
   win4: 0
   skyZenithColor:
@@ -1418,7 +1418,7 @@ MonoBehaviour:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    floatVal: 99
+    floatVal: 107
     curveVal:
       serializedVersion: 2
       m_Curve:
@@ -1794,7 +1794,7 @@ MonoBehaviour:
     systemContainsProp: 1
   galaxy1Color:
     mode: 1
-    colorVal: {r: 1, g: 0, b: 0.110657215, a: 1}
+    colorVal: {r: 1, g: 0, b: 0.6574917, a: 1}
     gradientVal:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1852,7 +1852,7 @@ MonoBehaviour:
     systemContainsProp: 1
   galaxy2Color:
     mode: 1
-    colorVal: {r: 0.4481132, g: 0.7251387, b: 1, a: 1}
+    colorVal: {r: 0.4681289, g: 0.4470588, b: 1, a: 1}
     gradientVal:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1910,7 +1910,7 @@ MonoBehaviour:
     systemContainsProp: 1
   galaxy3Color:
     mode: 1
-    colorVal: {r: 0, g: 1, b: 0.123636246, a: 1}
+    colorVal: {r: 0, g: 0.84153175, b: 1, a: 1}
     gradientVal:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
@@ -2173,7 +2173,7 @@ MonoBehaviour:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    floatVal: 1
+    floatVal: 0.7
     curveVal:
       serializedVersion: 2
       m_Curve:

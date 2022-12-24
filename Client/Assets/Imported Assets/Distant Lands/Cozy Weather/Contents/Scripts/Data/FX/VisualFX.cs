@@ -54,6 +54,13 @@ namespace DistantLands.Cozy.Data
                 if (!InitializeEffect(VFXMod))
                     return;
 
+            
+            if (i <= 0.03f)
+            {
+                StopEffect();
+                return;
+            }
+
             if (_volume.transform.parent == null)
             {
                 _volume.transform.parent = VFXMod.postFXManager.parent;

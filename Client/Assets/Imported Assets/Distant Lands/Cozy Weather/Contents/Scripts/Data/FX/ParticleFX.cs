@@ -44,6 +44,13 @@ namespace DistantLands.Cozy.Data
                 if (InitializeEffect(VFXMod) == false)
                     return;
 
+                    
+            if (intensity <= 0.03f)
+            {
+                StopEffect();
+                return;
+            }
+
             if (runtimeRef.transform.parent == null)
             {
                 runtimeRef.transform.parent = VFXMod.particleManager.parent;

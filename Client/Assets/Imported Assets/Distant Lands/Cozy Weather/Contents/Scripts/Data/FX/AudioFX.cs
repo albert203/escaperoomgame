@@ -48,6 +48,12 @@ namespace DistantLands.Cozy.Data
                 if (InitializeEffect(VFXMod) == false)
                     return;
 
+            if (vol <= 0.03f)
+            {
+                StopEffect();
+                return;
+            }
+
             if (runtimeRef.transform.parent == null)
             {
                 runtimeRef.transform.parent = VFXMod.particleManager.parent;
@@ -56,6 +62,7 @@ namespace DistantLands.Cozy.Data
 
             if (vol != 0)
             {
+
                 if (!runtimeRef.isPlaying && runtimeRef.isActiveAndEnabled)
                     runtimeRef.Play();
                 runtimeRef.volume = Mathf.Clamp01(transitionTimeModifier.Evaluate(vol)) * maximumVolume * VFXMod.audioManager.volumeMultiplier;
