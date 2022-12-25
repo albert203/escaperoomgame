@@ -126,6 +126,6 @@ Material:
     - _FogSquish: {r: 1, g: 3.93, b: 0, a: 0}
     - _LightColor: {r: 0.49830455, g: 0.59186006, b: 1.669757, a: 1}
     - _LightColor1: {r: 11.924528, g: 32, b: 29.818542, a: 0}
-    - _SunDirection: {r: -0.075178415, g: -0.9663763, b: -0.24589711, a: 0}
+    - _SunDirection: {r: -0.7134605, g: -0.7003089, b: 0.023274962, a: 0}
     - _SunDirection1: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
